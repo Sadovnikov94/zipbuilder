@@ -46,9 +46,6 @@ public class ZipArchiveBuilder
             urlItem.setFileName(fileName);
             urlItem.setUrl(url);
 
-            logger.log(Level.FINEST, "path " + path + ", filename " + fileName + ", url " + url);
-            logger.log(Level.FINEST, "item url " + itemUrl + ", url " + url);
-
             addItem(urlItem, 0);
         }
         catch (MalformedURLException e)
@@ -92,7 +89,7 @@ public class ZipArchiveBuilder
                 String zipFilePath = entry.getKey();
                 AbstractZipItem item = entry.getValue();
 
-                logger.info("Archive " + tempZipArchive.getName() + " zipping progress : (" + ++count + "/" + items.size() + ")");
+                logger.fine("Archive " + tempZipArchive.getName() + " zipping progress : (" + ++count + "/" + items.size() + ")");
                 if (item instanceof FileItem)
                 {
                     FileItem fileItem = (FileItem) item;
@@ -163,7 +160,7 @@ public class ZipArchiveBuilder
     {
         StringBuilder zipFilePath = new StringBuilder();
 
-        logger.info("item " + item);
+        logger.fine("item added " + item);
 
         if (item.getPath() != null && !item.getPath().trim().equals(""))
         {
