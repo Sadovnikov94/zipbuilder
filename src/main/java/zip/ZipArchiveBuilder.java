@@ -95,35 +95,31 @@ public class ZipArchiveBuilder
 
                     zipFileEntry(zipOutputStream, fileItem.getFile(), zipFilePath);
                 }
+                else if (item instanceof UrlItem)
+                {
+                    UrlItem urlItem = (UrlItem) item;
+
+                    File tempFile;
+                    try
+                    {
+                        tempFile = File.createTempFile(UUID.randomUUID().toString(), "");
+
+                        URL url = new URL(UrlEscapers.urlFragmentEscaper().escape(urlItem.getUrl().toString()));
+                        FileUtils.copyURLToFile(url, tempFile);
+                    }
+                    catch (IOException e)
+                    {
+                        throw new ZipArchiveException("Failed to download file " + urlItem.getUrl(), e);
+                    }
+
+                    zipFileEntry(zipOutputStream, tempFile, zipFilePath);
+
+                    tempFile.delete();
+                }
                 else
                 {
-                    if (item instanceof UrlItem)
-                    {
-                        UrlItem urlItem = (UrlItem) item;
-
-                        File tempFile;
-                        try
-                        {
-                            tempFile = File.createTempFile(UUID.randomUUID().toString(), "");
-
-                            URL url = new URL(UrlEscapers.urlFragmentEscaper().escape(urlItem.getUrl().toString()));
-                            FileUtils.copyURLToFile(url, tempFile);
-                        }
-                        catch (IOException e)
-                        {
-                            throw new ZipArchiveException("Failed to download file " + urlItem.getUrl(), e);
-                        }
-
-                        zipFileEntry(zipOutputStream, tempFile, zipFilePath);
-
-                        tempFile.delete();
-                    }
-                    else
-                    {
-                        throw new ZipArchiveException("Unexpected item type.");
-                    }
+                    throw new ZipArchiveException("Unexpected item type.");
                 }
-
             }
 
             logger.info("Archive " + tempZipArchive.getName() + " ready");
@@ -167,7 +163,8 @@ public class ZipArchiveBuilder
             zipFilePath.append(File.separator);
         }
         int extensionFirstChar = item.getFileNameInArchive().lastIndexOf('.');
-        if(extensionFirstChar == -1) {
+        if (extensionFirstChar == -1)
+        {
             extensionFirstChar = item.getFileNameInArchive().length();
         }
         zipFilePath.append(item.getFileNameInArchive(), 0, extensionFirstChar);
