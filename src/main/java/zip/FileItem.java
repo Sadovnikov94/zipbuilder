@@ -19,6 +19,6 @@ public class FileItem extends AbstractZipItem {
 
   @Override
   public String toString() {
-    return super.getPath() + super.getFileName();
+    return super.getPathInArchive() + super.getFileNameInArchive();
   }
 }

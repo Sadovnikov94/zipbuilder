@@ -5,23 +5,23 @@ package zip;
  */
 public abstract class AbstractZipItem {
 
-  private String path;
-  private String fileName;
+  private String pathInArchive;
+  private String fileNameInArchive;
 
-  public String getPath() {
-    return path;
+  public String getPathInArchive() {
+    return pathInArchive;
   }
 
-  public void setPath(String path) {
-    this.path = path;
+  public void setPathInArchive(String pathInArchive) {
+    this.pathInArchive = pathInArchive;
   }
 
-  public String getFileName() {
-    return fileName;
+  public String getFileNameInArchive() {
+    return fileNameInArchive;
   }
 
-  public void setFileName(String fileName) {
-    this.fileName = fileName;
+  public void setFileNameInArchive(String fileNameInArchive) {
+    this.fileNameInArchive = fileNameInArchive;
   }
 
 }

@@ -34,15 +34,15 @@ public class ZipArchiveBuilder
     }
 
 
-    public void addUrlItem(String path, String fileName, String itemUrl)
+    public void addUrlItem(String pathInArchive, String fileNameInArchive, String itemUrl)
     {
         try
         {
             URL url = new URL(itemUrl);
 
             UrlItem urlItem = new UrlItem();
-            urlItem.setPath(path);
-            urlItem.setFileName(fileName);
+            urlItem.setPathInArchive(pathInArchive);
+            urlItem.setFileNameInArchive(fileNameInArchive);
             urlItem.setUrl(url);
 
             addItem(urlItem, 0);
@@ -54,11 +54,11 @@ public class ZipArchiveBuilder
     }
 
 
-    public void addFileItem(String path, String fileName, File file)
+    public void addFileItem(String pathInArchive, String fileNameInArchive, File file)
     {
         FileItem fileItem = new FileItem();
-        fileItem.setPath(path);
-        fileItem.setFileName(fileName);
+        fileItem.setPathInArchive(pathInArchive);
+        fileItem.setFileNameInArchive(fileNameInArchive);
         fileItem.setFile(file);
 
         addItem(fileItem, 0);
@@ -161,17 +161,17 @@ public class ZipArchiveBuilder
 
         logger.fine("item added " + item);
 
-        if (item.getPath() != null && !item.getPath().trim().equals(""))
+        if (item.getPathInArchive() != null && !item.getPathInArchive().trim().equals(""))
         {
-            zipFilePath.append(item.getPath());
+            zipFilePath.append(item.getPathInArchive());
             zipFilePath.append(File.separator);
         }
-        zipFilePath.append(item.getFileName().substring(0, item.getFileName().lastIndexOf('.')));
+        zipFilePath.append(item.getFileNameInArchive().substring(0, item.getFileNameInArchive().lastIndexOf('.')));
         if (fileVersion > 0)
         {
             zipFilePath.append(" (").append(fileVersion).append(")");
         }
-        zipFilePath.append(item.getFileName().substring(item.getFileName().lastIndexOf('.')));
+        zipFilePath.append(item.getFileNameInArchive().substring(item.getFileNameInArchive().lastIndexOf('.')));
 
         if (items.containsKey(zipFilePath.toString()))
         {
