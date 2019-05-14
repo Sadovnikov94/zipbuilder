@@ -1,7 +1,6 @@
 package zip;
 
 import com.google.common.net.UrlEscapers;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import java.io.File;
