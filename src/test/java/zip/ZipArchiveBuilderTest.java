@@ -7,26 +7,36 @@ import org.junit.Test;
 public class ZipArchiveBuilderTest
 {
 
-    private ZipArchiveBuilder testSource = new ZipArchiveBuilder();
-
-
     @Test(expected = ZipArchiveException.class)
-    public void addUrlItem()
+    public void addUrlItem_malformedUrl_throwZipArchiveException()
     {
-        testSource.addUrlItem(UUID.randomUUID().toString(), UUID.randomUUID().toString(), UUID.randomUUID().toString());
+        ZipArchiveBuilder testSource = new ZipArchiveBuilder();
+        testSource.addUrlItem(File.separator, UUID.randomUUID().toString(), UUID.randomUUID().toString());
+    }
+
+
+    @Test
+    public void addUrlItem_normalUrl_itemAdded()
+    {
+        ZipArchiveBuilder testSource = new ZipArchiveBuilder();
+        testSource.addUrlItem(File.separator, UUID.randomUUID().toString(), "https://github.com/Sadovnikov94/zipbuilder");
     }
 
 
     @Test
     public void addFileItem()
     {
-        testSource.addFileItem("test.zip", "test.zip", new File("test.zip"));
+        ZipArchiveBuilder testSource = new ZipArchiveBuilder();
+        testSource.addFileItem(File.separator, UUID.randomUUID().toString(), new File("test.zip"));
     }
 
 
     @Test
     public void buildTempArchive()
     {
-        testSource.buildTempArchive();
+        ZipArchiveBuilder testSource = new ZipArchiveBuilder();
+        testSource.addUrlItem(File.separator, UUID.randomUUID().toString(), "https://github.com/Sadovnikov94/zipbuilder");
+        File file = testSource.buildTempArchive();
+        file.deleteOnExit();
     }
 }

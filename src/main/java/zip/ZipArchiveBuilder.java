@@ -166,12 +166,16 @@ public class ZipArchiveBuilder
             zipFilePath.append(item.getPathInArchive());
             zipFilePath.append(File.separator);
         }
-        zipFilePath.append(item.getFileNameInArchive().substring(0, item.getFileNameInArchive().lastIndexOf('.')));
+        int extensionFirstChar = item.getFileNameInArchive().lastIndexOf('.');
+        if(extensionFirstChar == -1) {
+            extensionFirstChar = item.getFileNameInArchive().length();
+        }
+        zipFilePath.append(item.getFileNameInArchive(), 0, extensionFirstChar);
         if (fileVersion > 0)
         {
             zipFilePath.append(" (").append(fileVersion).append(")");
         }
-        zipFilePath.append(item.getFileNameInArchive().substring(item.getFileNameInArchive().lastIndexOf('.')));
+        zipFilePath.append(item.getFileNameInArchive().substring(extensionFirstChar));
 
         if (items.containsKey(zipFilePath.toString()))
         {
