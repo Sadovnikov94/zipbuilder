@@ -1,4 +1,4 @@
-package zip;
+package com.is.zip;
 
 /**
  * @author isadovnikov

@@ -1,4 +1,4 @@
-package zip;
+package com.is.zip;
 
 import java.io.File;
 

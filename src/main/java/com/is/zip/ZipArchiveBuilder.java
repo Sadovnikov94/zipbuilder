@@ -1,4 +1,4 @@
-package zip;
+package com.is.zip;
 
 import com.google.common.net.UrlEscapers;
 import java.util.logging.Logger;
@@ -31,6 +31,23 @@ public class ZipArchiveBuilder
     public ZipArchiveBuilder()
     {
         items = new HashMap<>();
+    }
+
+
+    public void addUrlItem(String itemUrl)
+    {
+        this.addUrlItem(File.separator, UUID.randomUUID().toString(), itemUrl);
+    }
+
+
+    public void addFileItem(File file)
+    {
+        String fileNameInArchive = file.getName();
+        if (this.isBlank(fileNameInArchive))
+        {
+            fileNameInArchive = UUID.randomUUID().toString();
+        }
+        this.addFileItem(File.separator, fileNameInArchive, file);
     }
 
 
@@ -157,7 +174,7 @@ public class ZipArchiveBuilder
 
         logger.fine("item added " + item);
 
-        if (item.getPathInArchive() != null && !item.getPathInArchive().trim().equals(""))
+        if (isBlank(item.getPathInArchive()))
         {
             zipFilePath.append(item.getPathInArchive());
             zipFilePath.append(File.separator);
@@ -182,5 +199,11 @@ public class ZipArchiveBuilder
         {
             items.put(zipFilePath.toString(), item);
         }
+    }
+
+
+    private boolean isBlank(String string)
+    {
+        return string != null && !string.trim().equals("");
     }
 }
