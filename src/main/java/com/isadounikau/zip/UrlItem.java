@@ -1,4 +1,4 @@
-package com.is.zip;
+package com.isadounikau.zip;
 
 import java.net.URL;
 

@@ -1,4 +1,4 @@
-package com.is.zip;
+package com.isadounikau.zip;
 
 import com.google.common.net.UrlEscapers;
 import java.util.logging.Logger;
